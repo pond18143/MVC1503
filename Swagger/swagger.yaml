@@ -1,0 +1,120 @@
+swagger: '2.0'
+info:
+  description: ''
+  version: '2'
+  title: MVC
+host: 'localhost:5040'
+tags:
+
+  - name: issueDocument
+
+schemes:
+  - http
+paths:
+
+  /api/create:
+    post:
+      tags:
+        - issueDocument
+      summary: Create a Document
+      description: Create Document
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: request body
+          required: true
+          schema:
+            $ref: '#/definitions/studentinfo'
+
+
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/createsuccess201'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/badRequest400'
+        '401':
+          description: unAuthenticate
+          schema:
+            $ref: '#/definitions/unAuthenticate401'
+
+
+
+definitions:
+  unAuthenticate401:
+    type: object
+    properties:
+      statusCode:
+        type: number
+        example: 401
+      message:
+        type: string
+        example: Failed to Authenticate API KEY
+  badRequest400:
+    type: object
+    properties:
+      statusCode:
+        type: number
+        example: 400
+      message:
+        type: string
+        example: <function_name>.bc_user is required
+
+
+  issuePlanting201:
+    type: object
+    properties:
+      statusCode:
+        type: number
+        example: 201
+      message:
+        type: string
+        example: 'Request for [IssueGarden] GardenDoc|6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b : Transaction has been submitted'
+
+  createsuccess201:
+    type: object
+    properties:
+      statusCode:
+        type: number
+        example: 201
+      message:
+        type: string
+        example: Successfully
+
+  studentinfo:
+    type: object
+    properties:
+      first_name:
+        type: string
+        example: 'poramet'
+      last_name:
+        type: string
+        example: 'sawaengsyk'
+      faculty_id:
+        type: string
+        example: '1'
+      gender:
+        type: string
+        example: 'M'
+      grade:
+        type: string
+        example: '4.00'
+      student_status:
+        type: string
+        example: 'Y'
+      create_by:
+        type: string
+        example: 'poramet sawaengsuk'
+      update_by:
+        type: string
+        example: 'poramet sawaengsuk'
+      work_status:
+        type: string
+        example: 'Y'
