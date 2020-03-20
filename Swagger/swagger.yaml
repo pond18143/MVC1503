@@ -3,37 +3,46 @@ info:
   description: ''
   version: '2'
   title: MVC
-host: 'localhost:5040'
+host: 'localhost:4444'
 tags:
 
-  - name: issueDocument
+  - name: Bank
 
 schemes:
   - http
 paths:
-
-  /api/create:
+  /api/deposit:
     post:
       tags:
-        - issueDocument
-      summary: Create a Document
-      description: Create Document
+        - Bank
+      summary: Deposit
+      description: Deposit your money
       consumes:
-        - application/json
+        - application/x-www-form-urlencoded
       produces:
         - application/json
       parameters:
-        - in: body
-          name: body
-          description: request body
+        - name: account_number
+          in: formData
+          description: เลขบัญชี
           required: true
-          schema:
-            $ref: '#/definitions/studentinfo'
-
-
+          type: string
+          default: "2562342110003"
+        - name: pin
+          in: formData
+          description: รหัส4หลัก
+          required: true
+          type: string
+          default: "8143"
+        - name: depo
+          in: formData
+          description: จำนวนเงินที่ต้องการฝาก
+          required: true
+          type: string
+          default: "10000"
       responses:
         '201':
-          description: Created
+          description: update success
           schema:
             $ref: '#/definitions/createsuccess201'
         '400':
@@ -44,40 +53,149 @@ paths:
           description: unAuthenticate
           schema:
             $ref: '#/definitions/unAuthenticate401'
-
-
-
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal500'
+  /api/withdraw:
+    post:
+      tags:
+        - Bank
+      summary: Withdraw
+      description: Withdraw your money
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+      parameters:
+        - name: account_number
+          in: formData
+          description: เลขบัญชี
+          required: true
+          type: string
+          default: "2562342110003"
+        - name: pin
+          in: formData
+          description: รหัส4หลัก
+          required: true
+          type: string
+          default: "8143"
+        - name: withd
+          in: formData
+          description: จำนวนเงินที่ต้องการถอน
+          required: true
+          type: string
+          default: "10000"
+      responses:
+        '201':
+          description: update success
+          schema:
+            $ref: '#/definitions/createsuccess201'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/badRequest400'
+        '401':
+          description: unAuthenticate
+          schema:
+            $ref: '#/definitions/unAuthenticate401'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal500'
+  /api/tranfer:
+    post:
+      tags:
+        - Bank
+      summary: Tranfer
+      description: Tranfer your money
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+      parameters:
+        - name: ac1
+          in: formData
+          description: เลขบัญชีผู้โอน
+          required: true
+          type: string
+          default: "2562342110003"
+        - name: pi1
+          in: formData
+          description: รหัส4หลักผู้โอน
+          required: true
+          type: string
+          default: "8143"
+        - name: ac2
+          in: formData
+          description: เลขบัญชีผู้รับ
+          required: true
+          type: string
+          default: "2562342110002"
+        - name: tran
+          in: formData
+          description: จำนวนเงินที่ต้องการโอน
+          required: true
+          type: string
+          default: "10000"
+      responses:
+        '201':
+          description: update success
+          schema:
+            $ref: '#/definitions/createsuccess201'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/badRequest400'
+        '401':
+          description: unAuthenticate
+          schema:
+            $ref: '#/definitions/unAuthenticate401'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal500'
+  /api/getid:
+    post:
+      tags:
+        - Bank
+      summary: Check balance
+      description: Check your money balance
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+      parameters:
+        - name: account_number
+          in: formData
+          description: เลขบัญชี
+          required: true
+          type: string
+          default: "2562342110003"
+        - name: pin
+          in: formData
+          description: รหัส4หลัก
+          required: true
+          type: string
+          default: "8143"
+      responses:
+        '201':
+          description: update success
+          schema:
+            $ref: '#/definitions/createsuccess201'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/badRequest400'
+        '401':
+          description: unAuthenticate
+          schema:
+            $ref: '#/definitions/unAuthenticate401'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal500'
 definitions:
-  unAuthenticate401:
-    type: object
-    properties:
-      statusCode:
-        type: number
-        example: 401
-      message:
-        type: string
-        example: Failed to Authenticate API KEY
-  badRequest400:
-    type: object
-    properties:
-      statusCode:
-        type: number
-        example: 400
-      message:
-        type: string
-        example: <function_name>.bc_user is required
-
-
-  issuePlanting201:
-    type: object
-    properties:
-      statusCode:
-        type: number
-        example: 201
-      message:
-        type: string
-        example: 'Request for [IssueGarden] GardenDoc|6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b : Transaction has been submitted'
-
   createsuccess201:
     type: object
     properties:
@@ -86,35 +204,32 @@ definitions:
         example: 201
       message:
         type: string
-        example: Successfully
-
-  studentinfo:
+        example: update success
+  badRequest400:
     type: object
     properties:
-      first_name:
+      statusCode:
+        type: number
+        example: 400
+      message:
         type: string
-        example: 'poramet'
-      last_name:
+        example: Bad Request
+  unAuthenticate401:
+    type: object
+    properties:
+      statusCode:
+        type: number
+        example: 401
+      message:
         type: string
-        example: 'sawaengsyk'
-      faculty_id:
+        example: Unauthorized
+  internal500:
+    type: object
+    properties:
+      statusCode:
+        type: number
+        example: 500
+      message:
         type: string
-        example: '1'
-      gender:
-        type: string
-        example: 'M'
-      grade:
-        type: string
-        example: '4.00'
-      student_status:
-        type: string
-        example: 'Y'
-      create_by:
-        type: string
-        example: 'poramet sawaengsuk'
-      update_by:
-        type: string
-        example: 'poramet sawaengsuk'
-      work_status:
-        type: string
-        example: 'Y'
+        example: Internal Server Error
+

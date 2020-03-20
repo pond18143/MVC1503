@@ -37,5 +37,10 @@ app.post('/getid', async (req, res) => {
     logger.debug(req.body)
     var result = await new request().getid(req.body)
     res.json(result.recordset);
+});
+app.post('/tranfer', async (req, res) => {
+    logger.debug(req.body)
+    var result = await new request().tranfer(req.body)
+    res.json(result.recordset);
 })
 module.exports = app

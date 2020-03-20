@@ -1,4 +1,4 @@
-const moment = require('moment');
+// const moment = require('moment');
 const logger = require('../util/logger.js');
 var sql = require("mssql");
 // config for your database
@@ -37,10 +37,11 @@ class request {
                 reject(messageError)
             }
         })
-
     }
+    //ฝากเงิน
     async deposit(req) {
         var depo =req.depo
+        //เชคเงินฝากมากกว่า100 และ เชคว่าเป็นธนาบัตร
         if (depo>100 && depo%100 ==0){
         var request = new sql.Request();
         var command = await request.query(`UPDATE pDB.dbo.mvc
@@ -50,8 +51,10 @@ class request {
         return command
         }
     }
+    //ถอนเงิน
     async withdraw(req) {
         var withd =req.withd
+        //เชคเงินถอนน้อยกว่า20000 และ เชคว่าเป็นธนาบัตร
         if (withd<20000 && withd%100 ==0 ){
         var request = new sql.Request();
         var command = await request.query(`UPDATE pDB.dbo.mvc
@@ -61,13 +64,32 @@ class request {
         return command
         }
     }
+   //เช็คยอดเงิน
     async getid(req) {
         var request = new sql.Request();
-        var command = await request.query(`SELECT account_number, pin, balance
+        var command = await request.query(`SELECT balance
         FROM pDB.dbo.mvc
         WHERE account_number = ${req.account_number} AND pin =${req.pin} `);
         logger.debug(command.recordset);
         return command
+    }
+    //โอนเงิน
+    async tranfer(req) {
+        var ac1 =req.ac1;var pi =req.pi1;//เลขบัฐชีกับรหัสของคนโอน
+        var ac2 =req.ac2
+        var tran =req.tran
+        //เช็คเงินถอนน้อยกว่า1ล้าน
+        if (tran<=1000000){
+        var request = new sql.Request();
+        var command = await request.query(`UPDATE pDB.dbo.mvc
+        SET balance =balance-${tran}
+        WHERE account_number = ${req.ac1} AND pin =${req.pi}
+        UPDATE pDB.dbo.mvc
+        SET balance =balance+${tran}
+        WHERE account_number = ${req.ac2}`);
+        logger.debug(command.recordset);
+        return command
+        }
     }
 }
 
