@@ -13,31 +13,32 @@ var err = sql.connect(config)
 if (err) console.log(err);
 
 class request {
-    async create(req) {
-        let FunctionName = '[create]'
-        logger.info(FunctionName)
-        return new Promise(async function (resolve, reject) {
-            try{
-                var account_number = req.account_number
-                var pin = req.pin
-                var balance = req.balance
-
-                var request = new sql.Request();
-                var command = `INSERT INTO mvc
-        (account_number, pin, balance)
-        VALUES('${account_number}', '${pin}', '${balance}')`;
-               var result = await request.query(command); //นำเข้าข้อมูลใส่ db
-                console.log(result)
-            }catch (error) { //ดัก error
-                let messageError = {
-                    statusCode: error.statusCode || 400,
-                    message: error.message || `${functionName} CREATE failed [Error] ${error}`
-                }
-                logger.error(messageError.message)
-                reject(messageError)
-            }
-        })
-    }
+        //สร้างข้อมูล
+//     async create(req) {
+//         let FunctionName = '[create]'
+//         logger.info(FunctionName)
+//         return new Promise(async function (resolve, reject) {
+//             try{
+//                 var account_number = req.account_number
+//                 var pin = req.pin
+//                 var balance = req.balance
+//
+//                 var request = new sql.Request();
+//                 var command = `INSERT INTO mvc
+//         (account_number, pin, balance)
+//         VALUES('${account_number}', '${pin}', '${balance}')`;
+//                var result = await request.query(command); //นำเข้าข้อมูลใส่ db
+//                 console.log(result)
+//             }catch (error) { //ดัก error
+//                 let messageError = {
+//                     statusCode: error.statusCode || 400,
+//                     message: error.message || `${functionName} CREATE failed [Error] ${error}`
+//                 }
+//                 logger.error(messageError.message)
+//                 reject(messageError)
+//             }
+//         })
+//     }
     //ฝากเงิน
     async deposit(req) {
         var depo =req.depo

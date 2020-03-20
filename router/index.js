@@ -7,22 +7,22 @@ app.get('/test', (req,res) => {
     res.send('test')
 })
 
-app.post(`/create` ,async (req , res)=> {
-    try {
-        var result = await new request().create(req.body)
-        res.status(201)
-        res.json(result)
-        console.log(result)
-    } catch (error) {
-        let messageError = {
-            statusCode: error.statusCode || 400,
-            message: error.message || error
-        }
-        res.status(messageError.statusCode)
-        res.json(messageError)
-        logger.error(messageError.message)
-    }
-});
+// app.post(`/create` ,async (req , res)=> {
+//     try {
+//         var result = await new request().create(req.body)
+//         res.status(201)
+//         res.json(result)
+//         console.log(result)
+//     } catch (error) {
+//         let messageError = {
+//             statusCode: error.statusCode || 400,
+//             message: error.message || error
+//         }
+//         res.status(messageError.statusCode)
+//         res.json(messageError)
+//         logger.error(messageError.message)
+//     }
+// });
 app.post('/deposit', async (req, res) => {
     logger.debug(req.body)
     var result = await new request().deposit(req.body)
