@@ -1,3 +1,9 @@
+ใส่ข้อมูล
+
+SET IDENTITY_INSERT pDB.dbo.bank ON
+
+SET IDENTITY_INSERT pDB.dbo.bank OFF
+
 npm init -y 
 
 npminstall
@@ -15,5 +21,7 @@ npminstall
 3.run nodeserver.js
 
 Model คือ คือส่วน Business Model หรือส่วนที่ติดต่อกับฐานข้อมูล
+
 Controller คือ ส่วนควบคุมและรับ request จาก user มาและไปดึงข้อมูลจาก Model มาเพื่อแสดงผลข้อมูลกลับไปยัง user ที่ส่วน View
+
 View คือ ส่วนที่แสดงผลข้อมูล
