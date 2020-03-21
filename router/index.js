@@ -26,21 +26,21 @@ app.get('/test', (req,res) => {
 app.post('/deposit', async (req, res) => {
     logger.debug(req.body)
     var result = await new request().deposit(req.body)
-    res.json(result.recordset);
+    res.status(result[0]).json(result[1]);
 });
 app.post('/withdraw', async (req, res) => {
     logger.debug(req.body)
     var result = await new request().withdraw(req.body)
-    res.json(result.recordset);
+    res.status(result[0]).json(result[1]);
 });
 app.post('/getid', async (req, res) => {
     logger.debug(req.body)
     var result = await new request().getid(req.body)
-    res.json(result.recordset);
+    res.status(result[0]).json(result[1]);
 });
 app.post('/tranfer', async (req, res) => {
     logger.debug(req.body)
     var result = await new request().tranfer(req.body)
-    res.json(result.recordset);
+    res.status(result[0]).json(result[1]);
 })
 module.exports = app

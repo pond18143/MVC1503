@@ -41,6 +41,7 @@ class request {
 //     }
     //ฝากเงิน
     async deposit(req) {
+        var message
         var depo =req.depo
         //เชคเงินฝากมากกว่า100 และ เชคว่าเป็นธนาบัตร
         if (depo>100 && depo%100 ==0){
@@ -49,11 +50,17 @@ class request {
         SET balance =balance+${depo}
         WHERE account_number = ${req.account_number} AND pin =${req.pin} `);
         logger.debug(command.recordset);
-        return command
+        message ={
+                status_Code: 200,
+                status: "success",
+                message: command.recordset
+                }
+        return [200, message];
         }
     }
     //ถอนเงิน
     async withdraw(req) {
+        var message
         var withd =req.withd
         //เชคเงินถอนน้อยกว่า20000 และ เชคว่าเป็นธนาบัตร
         if (withd<20000 && withd%100 ==0 ){
@@ -62,20 +69,32 @@ class request {
         SET balance =balance-${withd}
         WHERE account_number = ${req.account_number} AND pin =${req.pin} `);
         logger.debug(command.recordset);
-        return command
+        message ={
+                status_Code: 200,
+                status: "success",
+                message: command.recordset
+                }
+        return [200, message];
         }
     }
    //เช็คยอดเงิน
     async getid(req) {
+        var message
         var request = new sql.Request();
         var command = await request.query(`SELECT balance
         FROM pDB.dbo.mvc
         WHERE account_number = ${req.account_number} AND pin =${req.pin} `);
         logger.debug(command.recordset);
-        return command
+        message ={
+                status_Code: 200,
+                status: "success",
+                message: command.recordset[0]
+                }
+        return [200, message];
     }
     //โอนเงิน
     async tranfer(req) {
+        var message
         var ac1 =req.ac1;var pi =req.pi1;//เลขบัฐชีกับรหัสของคนโอน
         var ac2 =req.ac2
         var tran =req.tran
@@ -89,7 +108,12 @@ class request {
         SET balance =balance+${tran}
         WHERE account_number = ${req.ac2}`);
         logger.debug(command.recordset);
-        return command
+        message ={
+                status_Code: 200,
+                status: "success",
+                message: command.recordset
+                }
+        return [200, message];
         }
     }
 }

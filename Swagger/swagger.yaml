@@ -41,10 +41,10 @@ paths:
           type: string
           default: "10000"
       responses:
-        '201':
+        '200':
           description: update success
           schema:
-            $ref: '#/definitions/createsuccess201'
+            $ref: '#/definitions/createsuccess200'
         '400':
           description: Bad Request
           schema:
@@ -87,10 +87,10 @@ paths:
           type: string
           default: "10000"
       responses:
-        '201':
+        '200':
           description: update success
           schema:
-            $ref: '#/definitions/createsuccess201'
+            $ref: '#/definitions/createsuccess200'
         '400':
           description: Bad Request
           schema:
@@ -119,19 +119,19 @@ paths:
           description: เลขบัญชีผู้โอน
           required: true
           type: string
-          default: "2562342110003"
+          default: "2562342110002"
         - name: pi1
           in: formData
           description: รหัส4หลักผู้โอน
           required: true
           type: string
-          default: "8143"
+          default: "4117"
         - name: ac2
           in: formData
           description: เลขบัญชีผู้รับ
           required: true
           type: string
-          default: "2562342110002"
+          default: "2562342110001"
         - name: tran
           in: formData
           description: จำนวนเงินที่ต้องการโอน
@@ -139,10 +139,10 @@ paths:
           type: string
           default: "10000"
       responses:
-        '201':
+        '200':
           description: update success
           schema:
-            $ref: '#/definitions/createsuccess201'
+            $ref: '#/definitions/createsuccess200'
         '400':
           description: Bad Request
           schema:
@@ -179,10 +179,10 @@ paths:
           type: string
           default: "8143"
       responses:
-        '201':
+        '200':
           description: update success
           schema:
-            $ref: '#/definitions/createsuccess201'
+            $ref: '#/definitions/createsuccess200'
         '400':
           description: Bad Request
           schema:
@@ -196,12 +196,12 @@ paths:
           schema:
             $ref: '#/definitions/internal500'
 definitions:
-  createsuccess201:
+  createsuccess200:
     type: object
     properties:
       statusCode:
         type: number
-        example: 201
+        example: 200
       message:
         type: string
         example: update success
