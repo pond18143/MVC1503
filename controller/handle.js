@@ -84,7 +84,7 @@ class request {
         var request = new sql.Request();
         var command = await request.query(`UPDATE pDB.dbo.mvc
         SET balance =balance-${tran}
-        WHERE account_number = ${req.ac1} AND pin =${req.pi}
+        WHERE account_number = ${req.ac1} AND pin =${req.pi1}
         UPDATE pDB.dbo.mvc
         SET balance =balance+${tran}
         WHERE account_number = ${req.ac2}`);
